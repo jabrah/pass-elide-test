@@ -23,6 +23,22 @@ By default an in memory database is used.
 
 Look at http://localhost:8080/ to see the auto-created documentation and a UI for testing out the api. You can directly make request with the UI and see what happens. Note when doing a POST to create an object, be sure to edit the type field to have the correct object type and delete the id field to have the id auto-generated.
 
+## Running with Postgres
+
+First startup Postgres with:
+
+```
+docker-compose up
+```
+
+Then before running the jar as above:
+
+```
+export JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/pass
+export JDBC_DATABASE_USERNAME=pass
+export JDBC_DATABASE_PASSWORD=moo
+```
+
 # Known issues
 
   * Enums are stored in the db using their uppercase name, not the intended value. This can be fixed with custom converters.
