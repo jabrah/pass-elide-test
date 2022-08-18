@@ -27,6 +27,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.eclipse.pass.elide.converter.ListToStringConverter;
 import org.eclipse.pass.elide.converter.SetToStringConverter;
 
 import com.yahoo.elide.annotation.Include;
@@ -52,7 +53,7 @@ public class Journal {
     /**
      * Array of ISSN(s) for Journal
      */
-    @Convert(converter = SetToStringConverter.class)
+    @Convert(converter = ListToStringConverter.class)
     private List<String> issns = new ArrayList<>();
 
     /**
