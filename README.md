@@ -38,12 +38,36 @@ export JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/pass
 export JDBC_DATABASE_USERNAME=pass
 export JDBC_DATABASE_PASSWORD=moo
 ```
+# Using JSON API
 
-# Known issues
+All of our data model is available, just divided into attributes and relationshiops. Note that ids are now integers, not URIs.
 
-  * Enums are stored in the db using their uppercase name, not the intended value. This can be fixed with custom converters.
-  * The provided json api console gets the PATCH syntax wrong. There must be a data member of the relationship object in the JSON.
+## Creating a RepositoryCopy
 
+```
+curl -v -X POST "http://localhost:8080/api/v1/repositoryCopy" -H "accept: application/vnd.api+json" -H "Content-Type: application/vnd.api+json" -d @rc1.json
+```
+
+*rc1.json:*
+```
+{
+  "data": {
+    "type": "repositoryCopy",
+    "attributes": {
+      "accessUrl": "why",
+      "copyStatus": "ACCEPTED"
+    }
+  }
+}
+```
+
+## Patch a Journal
+
+```
+curl -X PATCH "http://localhost:8080/api/v1/journal/1" -H "accept: application/vnd.api+json" -H "Content-Type: application/vnd.api+json" -d @patch.json
+```
+
+*patch.json:*
  ```
  {
   "data": {
@@ -60,4 +84,14 @@ export JDBC_DATABASE_PASSWORD=moo
   }
 }
 ```
+
+
+# Known issues
+
+  * Enums are stored in the db using their uppercase name, not the intended value. This can be fixed with custom converters.
+  * Need nicer endpoint. Maybe /data. 
+  * RepositoryCopy in Java becomes repositoryCopy to JSON API. Do we like this or not?
+  * The provided json api console gets the PATCH syntax wrong. There must be a data member of the relationship object in the JSON.
+
+
   
