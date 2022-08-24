@@ -20,10 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.AttributeConverter;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -74,7 +73,7 @@ public class Repository {
     /**
      * Type of integration PASS has with the Repository
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = IntegrationTypeToStringConverter.class)
     private IntegrationType integrationType;
 
     /**
@@ -137,6 +136,18 @@ public class Repository {
         @Override
         public String toString() {
             return this.value;
+        }
+    }
+
+    private static class IntegrationTypeToStringConverter implements AttributeConverter<IntegrationType, String> {
+        @Override
+        public String convertToDatabaseColumn(IntegrationType attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public IntegrationType convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : IntegrationType.of(dbData);
         }
     }
 }

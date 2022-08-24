@@ -21,9 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.AttributeConverter;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +53,7 @@ public class Submission {
     /**
      * Source of Submission record
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SourceToStringConverter.class)
     private Source source;
 
     /**
@@ -70,13 +70,13 @@ public class Submission {
     /**
      * Status of Submission. Focused on informing User of current state of Submission.
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SubmissionStatusToStringConverter.class)
     private SubmissionStatus submissionStatus;
 
     /**
      * Overall status of Submission's Deposits
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = AggregatedDepositStatusToStringConverter.class)
     private AggregatedDepositStatus aggregatedDepositStatus;
 
     /**
@@ -237,6 +237,18 @@ public class Submission {
 
     }
 
+    private static class SubmissionStatusToStringConverter implements AttributeConverter<SubmissionStatus, String> {
+        @Override
+        public String convertToDatabaseColumn(SubmissionStatus attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public SubmissionStatus convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : SubmissionStatus.of(dbData);
+        }
+    }
+
     /**
      * Possible aggregatedDepositStatus of a submission, this is dependent on information from the server and
      * is calculated using the status of associated Deposits
@@ -300,7 +312,18 @@ public class Submission {
         public String toString() {
             return this.value;
         }
+    }
 
+    private static class AggregatedDepositStatusToStringConverter implements AttributeConverter<AggregatedDepositStatus, String> {
+        @Override
+        public String convertToDatabaseColumn(AggregatedDepositStatus attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public AggregatedDepositStatus convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : AggregatedDepositStatus.of(dbData);
+        }
     }
 
     /**
@@ -327,6 +350,34 @@ public class Submission {
         @Override
         public String toString() {
             return this.value;
+        }
+
+        /**
+         * Parse performer role
+         *
+         * @param status status string
+         * @return parsed status
+         */
+        public static Source of(String s) {
+            for (Source o: Source.values()) {
+                if (o.value.equals(s)) {
+                    return o;
+                }
+            }
+
+            throw new IllegalArgumentException("Invalid performer role: " + s);
+        }
+    }
+
+    private static class SourceToStringConverter implements AttributeConverter<Source, String> {
+        @Override
+        public String convertToDatabaseColumn(Source attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public Source convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : Source.of(dbData);
         }
     }
 }

@@ -20,7 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.AttributeConverter;
 import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -52,7 +54,15 @@ public class RepositoryCopy {
     /**
      * Status of deposit
      */
+    @Convert(converter = CopyStatusToStringConverter.class)
     private CopyStatus copyStatus;
+
+    //public CopyStatus getCopyStatus() {
+    //    return CopyStatus.of(copyStatus);
+    //}
+    //public void setCopyStatus(CopyStatus copyStatus) {
+    //    this.copyStatus = copyStatus.toString();
+    //}
 
     /**
      * URL to access the item in the repository
@@ -128,6 +138,19 @@ public class RepositoryCopy {
         @Override
         public String toString() {
             return this.value;
+        }
+    }
+
+    @Converter
+    private static class CopyStatusToStringConverter implements AttributeConverter<CopyStatus, String> {
+        @Override
+        public String convertToDatabaseColumn(CopyStatus attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public CopyStatus convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : CopyStatus.of(dbData);
         }
     }
 }

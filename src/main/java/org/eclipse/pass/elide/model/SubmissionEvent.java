@@ -19,9 +19,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.AttributeConverter;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,7 +45,7 @@ public class SubmissionEvent {
     /**
      * The type of event
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = EventTypeToStringConverter.class)
     private EventType eventType;
 
     /**
@@ -63,7 +63,7 @@ public class SubmissionEvent {
     /**
      * Role of the person performing the event
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PerformerRoleToStringConverter.class)
     private PerformerRole performerRole;
 
     /**
@@ -147,6 +147,18 @@ public class SubmissionEvent {
 
     }
 
+    private static class EventTypeToStringConverter implements AttributeConverter<EventType, String> {
+        @Override
+        public String convertToDatabaseColumn(EventType attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public EventType convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : EventType.of(dbData);
+        }
+    }
+
     /**
      * Roles of agents who might perform a SubmissionEvent
      */
@@ -163,6 +175,34 @@ public class SubmissionEvent {
         @Override
         public String toString() {
             return this.value;
+        }
+
+        /**
+         * Parse performer role
+         *
+         * @param status status string
+         * @return parsed status
+         */
+        public static PerformerRole of(String s) {
+            for (PerformerRole r: PerformerRole.values()) {
+                if (r.value.equals(s)) {
+                    return r;
+                }
+            }
+
+            throw new IllegalArgumentException("Invalid performer role: " + s);
+        }
+    }
+
+    private static class PerformerRoleToStringConverter implements AttributeConverter<PerformerRole, String> {
+        @Override
+        public String convertToDatabaseColumn(PerformerRole attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public PerformerRole convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : PerformerRole.of(dbData);
         }
     }
 }

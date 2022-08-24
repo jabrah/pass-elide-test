@@ -18,9 +18,9 @@ package org.eclipse.pass.elide.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.AttributeConverter;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +52,7 @@ public class Deposit {
     /**
      * Status of deposit
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = DepositStatusToStringConverter.class)
     private DepositStatus depositStatus;
 
     /**
@@ -129,6 +129,17 @@ public class Deposit {
         public String toString() {
             return this.value;
         }
+    }
 
+    private static class DepositStatusToStringConverter implements AttributeConverter<DepositStatus, String> {
+        @Override
+        public String convertToDatabaseColumn(DepositStatus attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public DepositStatus convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : DepositStatus.of(dbData);
+        }
     }
 }

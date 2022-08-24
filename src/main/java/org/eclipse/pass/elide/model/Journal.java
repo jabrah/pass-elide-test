@@ -28,7 +28,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.eclipse.pass.elide.converter.ListToStringConverter;
-import org.eclipse.pass.elide.converter.SetToStringConverter;
 
 import com.yahoo.elide.annotation.Include;
 

@@ -21,9 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.AttributeConverter;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +53,7 @@ public class Grant {
     /**
      * Status of award
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = AwardStatusToStringConverter.class)
     private AwardStatus awardStatus;
 
     /**
@@ -157,6 +157,18 @@ public class Grant {
         @Override
         public String toString() {
             return this.value;
+        }
+    }
+
+    private static class AwardStatusToStringConverter implements AttributeConverter<AwardStatus, String> {
+        @Override
+        public String convertToDatabaseColumn(AwardStatus attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public AwardStatus convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : AwardStatus.of(dbData);
         }
     }
 }

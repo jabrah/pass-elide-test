@@ -18,9 +18,9 @@ package org.eclipse.pass.elide.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.AttributeConverter;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,7 +59,7 @@ public class File {
     /**
      * Role of the file e.g. manuscript, supplemental
      */
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = FileRoleToStringConverter.class)
     private FileRole fileRole;
 
     /**
@@ -128,6 +128,18 @@ public class File {
         @Override
         public String toString() {
             return this.value;
+        }
+    }
+
+    private static class FileRoleToStringConverter implements AttributeConverter<FileRole, String> {
+        @Override
+        public String convertToDatabaseColumn(FileRole attribute) {
+            return attribute == null ? null : attribute.toString();
+        }
+
+        @Override
+        public FileRole convertToEntityAttribute(String dbData) {
+            return dbData == null ? null : FileRole.of(dbData);
         }
     }
 }
