@@ -31,6 +31,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.eclipse.pass.elide.converter.ListToStringConverter;
 import org.eclipse.pass.elide.converter.SetToStringConverter;
@@ -45,6 +46,7 @@ import com.yahoo.elide.annotation.Include;
 
 @Include
 @Entity
+@Table(name = "pass_user")
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -160,13 +162,13 @@ public class User {
     private static class RoleListToStringConverter implements AttributeConverter<List<Role>, String> {
         @Override
         public String convertToDatabaseColumn(List<Role> attribute) {
-            return attribute == null ? null
+            return attribute == null || attribute.isEmpty() ? null
                     : String.join(",", attribute.stream().map(Role::toString).collect(Collectors.toList()));
         }
 
         @Override
         public List<Role> convertToEntityAttribute(String dbData) {
-            return dbData == null ? Collections.emptyList() : Stream.of(dbData.split(",")).map(Role::of).collect(Collectors.toList());
+            return dbData == null || dbData.isEmpty() ? Collections.emptyList() : Stream.of(dbData.split(",")).map(Role::of).collect(Collectors.toList());
         }
     }
 }
