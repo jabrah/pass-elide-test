@@ -11,11 +11,11 @@ import javax.persistence.AttributeConverter;
 public class SetToStringConverter implements AttributeConverter<Set<String>, String> {
     @Override
     public String convertToDatabaseColumn(Set<String> attribute) {
-        return attribute == null ? null : String.join(",", attribute);
+        return attribute == null || attribute.isEmpty() ? null : String.join(",", attribute);
     }
 
     @Override
     public Set<String> convertToEntityAttribute(String dbData) {
-        return dbData == null ? Collections.emptySet() : new HashSet<String>(Arrays.asList(dbData.split(",")));
+        return dbData == null || dbData.isEmpty() ? Collections.emptySet() : new HashSet<String>(Arrays.asList(dbData.split(",")));
     }
 }
