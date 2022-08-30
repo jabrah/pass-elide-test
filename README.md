@@ -12,7 +12,7 @@ Java 11 and Maven 3.8 required.
 mvn clean package
 ```
 
-# Running
+# Running local build
 
 ```
 java -jar pass-elide-test.jar
@@ -23,21 +23,15 @@ By default an in memory database is used.
 
 Look at http://localhost:8080/ to see the auto-created documentation and a UI for testing out the api. You can directly make request with the UI and see what happens. Note when doing a POST to create an object, be sure to edit the type field to have the correct object type and delete the id field to have the id auto-generated.
 
-## Running with Postgres
+## Running with Docker setup
 
-First startup Postgres with:
+This uses Postgres.
 
+Just run:
 ```
-docker-compose up
+docker-compose up -d
 ```
 
-Then before running the jar as above:
-
-```
-export JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/pass
-export JDBC_DATABASE_USERNAME=pass
-export JDBC_DATABASE_PASSWORD=moo
-```
 # Using JSON API
 
 All of our data model is available, just divided into attributes and relationshiops. Note that ids are now integers, not URIs.
