@@ -57,13 +57,6 @@ public class RepositoryCopy {
     @Convert(converter = CopyStatusToStringConverter.class)
     private CopyStatus copyStatus;
 
-    //public CopyStatus getCopyStatus() {
-    //    return CopyStatus.of(copyStatus);
-    //}
-    //public void setCopyStatus(CopyStatus copyStatus) {
-    //    this.copyStatus = copyStatus.toString();
-    //}
-
     /**
      * URL to access the item in the repository
      */

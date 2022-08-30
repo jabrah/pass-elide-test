@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -147,6 +148,7 @@ public class SubmissionEvent {
 
     }
 
+    @Converter
     private static class EventTypeToStringConverter implements AttributeConverter<EventType, String> {
         @Override
         public String convertToDatabaseColumn(EventType attribute) {
@@ -194,6 +196,7 @@ public class SubmissionEvent {
         }
     }
 
+    @Converter
     private static class PerformerRoleToStringConverter implements AttributeConverter<PerformerRole, String> {
         @Override
         public String convertToDatabaseColumn(PerformerRole attribute) {
