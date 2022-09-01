@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.AttributeConverter;
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,6 +49,7 @@ public class Submission {
     /**
      * Stringified JSON representation of metadata captured by the relevant repository forms
      */
+    @Column(columnDefinition = "text")
     private String metadata;
 
     /**

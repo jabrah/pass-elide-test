@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.AttributeConverter;
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,11 +64,13 @@ public class Repository {
     /**
      * The legal text that a submitter must agree to in order to submit a publication to this repository
      */
+    @Column(columnDefinition = "text")
     private String agreementText;
 
     /**
      * Stringified JSON representing a form template to be loaded by the front-end when this Repository is selected
      */
+    @Column(columnDefinition = "text")
     private String formSchema;
 
     /**

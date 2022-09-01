@@ -15,6 +15,7 @@
  */
 package org.eclipse.pass.elide.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,6 +44,7 @@ public class Publication {
     /**
      * Abstract of the publication
      */
+    @Column(columnDefinition = "text")
     private String publicationAbstract;
 
     /**
