@@ -23,6 +23,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.yahoo.elide.annotation.Include;
@@ -59,6 +60,7 @@ public class Policy {
      * List of URIs for repositories that can satisfying this policy
      */
     @OneToMany
+    @JoinColumn(name = "Repository")
     private List<Repository> repositories = new ArrayList<>();
 
     /**
