@@ -86,6 +86,6 @@ curl -X PATCH "http://localhost:8080/api/v1/journal/1" -H "accept: application/v
   * Need nicer endpoint. Maybe /data. 
   * RepositoryCopy in Java becomes repositoryCopy to JSON API. Do we like this or not?
   * The provided json api console gets the PATCH syntax wrong. There must be a data member of the relationship object in the JSON.
-
+  * Can tighten up some of the type handling. For example I changed all our URI to string, but some may make sense as URI. Can add Serdes for them.
 
   
