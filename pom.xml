@@ -11,7 +11,7 @@
   
   <artifactId>pass-elide-test</artifactId>
   <groupId>org.eclipse.pass</groupId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
 
   <properties>
     <jar.finalName>pass-elide-test</jar.finalName>
