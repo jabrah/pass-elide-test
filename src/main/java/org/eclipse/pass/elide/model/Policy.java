@@ -18,10 +18,12 @@ package org.eclipse.pass.elide.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.yahoo.elide.annotation.Include;
@@ -46,6 +48,7 @@ public class Policy {
     /**
      * Several sentence description of policy
      */
+    @Column(columnDefinition = "text")
     private String description;
 
     /**
@@ -56,7 +59,7 @@ public class Policy {
     /**
      * List of URIs for repositories that can satisfying this policy
      */
-    @OneToMany
+    @ManyToMany
     private List<Repository> repositories = new ArrayList<>();
 
     /**
