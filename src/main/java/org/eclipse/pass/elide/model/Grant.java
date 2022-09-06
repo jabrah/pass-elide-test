@@ -16,6 +16,7 @@
 package org.eclipse.pass.elide.model;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,17 +95,17 @@ public class Grant {
     /**
      * Date the grant was awarded
      */
-    private LocalDateTime awardDate;
+    private ZonedDateTime awardDate;
 
     /**
      * Date the grant started
      */
-    private LocalDateTime startDate;
+    private ZonedDateTime startDate;
 
     /**
      * Date the grant ended
      */
-    private LocalDateTime endDate;
+    private ZonedDateTime endDate;
 
     /**
      * Status of award/grant

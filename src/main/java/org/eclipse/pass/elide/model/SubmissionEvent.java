@@ -15,7 +15,7 @@
  */
 package org.eclipse.pass.elide.model;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +53,7 @@ public class SubmissionEvent {
      * Date the event was performed by the User
      */
 
-    private LocalDateTime performedDate;
+    private ZonedDateTime performedDate;
 
     /**
      * URI of the User responsible for performing the event

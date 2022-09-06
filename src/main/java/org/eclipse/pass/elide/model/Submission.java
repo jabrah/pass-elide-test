@@ -15,7 +15,7 @@
  */
 package org.eclipse.pass.elide.model;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +65,7 @@ public class Submission {
     /**
      * Date the record was submitted by the User through PASS
      */
-    private LocalDateTime submittedDate;
+    private ZonedDateTime submittedDate;
 
     /**
      * Status of Submission. Focused on informing User of current state of Submission.
