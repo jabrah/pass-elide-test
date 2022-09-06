@@ -26,6 +26,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.eclipse.pass.elide.converter.ListToStringConverter;
 
@@ -39,6 +40,7 @@ import com.yahoo.elide.annotation.Include;
 
 @Include
 @Entity
+@Table(name = "pass_journal")
 public class Journal {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

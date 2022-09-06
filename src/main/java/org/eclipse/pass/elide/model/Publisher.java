@@ -28,11 +28,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.yahoo.elide.annotation.Include;
 
 @Include
 @Entity
+@Table(name = "pass_publisher")
 public class Publisher {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

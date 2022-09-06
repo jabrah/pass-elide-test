@@ -30,6 +30,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.yahoo.elide.annotation.Include;
 
@@ -41,6 +42,7 @@ import com.yahoo.elide.annotation.Include;
 
 @Include
 @Entity
+@Table(name = "pass_submission")
 public class Submission {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

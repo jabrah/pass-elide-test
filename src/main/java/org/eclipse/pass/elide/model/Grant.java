@@ -15,7 +15,6 @@
  */
 package org.eclipse.pass.elide.model;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +29,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.yahoo.elide.annotation.Include;
 
@@ -41,6 +41,7 @@ import com.yahoo.elide.annotation.Include;
 
 @Include
 @Entity
+@Table(name = "pass_grant")
 public class Grant {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
