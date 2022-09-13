@@ -1,0 +1,27 @@
+language: java
+sudo: required
+
+cache:
+  directories:
+    - $HOME/.m2
+
+before_install:
+  - sudo service mysql stop
+  - sudo service postgresql stop
+  - sudo service acpid stop
+  - sudo service atd stop
+  - sudo service cron stop
+  - sudo service memcached stop
+  - sudo service ntp stop
+  - sudo service rabbitmq-server stop
+  - sudo service resolvconf stop
+  - sudo service sshguard stop
+  - sudo service ssh stop
+  - sudo service rsyslog stop
+
+install: mvn -U install -Dspring-boot.stop.skip -Dspring-boot.run.skip -Ddocker.skip=true -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+script: mvn clean verify -DtrimStackTrace=false
+
+jdk:
+  - oraclejdk8

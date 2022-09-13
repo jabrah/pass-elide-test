@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse.pass</groupId>
+    <artifactId>pass-core</artifactId>
+    <version>0.2.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.eclipse.pass</groupId>
+  <artifactId>pass-core-doi-service</artifactId>
+  <packaging>war</packaging>
+
+  <name>Eclipse-PASS Doi Service</name>
+  <description>Service for looking up DOIs for journals</description>
+  <url>https://github.com/eclipse-pass/pass-doi-service</url>
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Jim Martino</name>
+      <email>jrm@jhu.edu</email>
+      <organization>Johns Hopkins University, Sheridan Libraries, Digital Research and Curation Center
+      </organization>
+      <organizationUrl>https://www.library.jhu.edu/library-departments/digital-research-curation-center/
+      </organizationUrl>
+    </developer>
+  </developers>
+
+  <properties>
+    <!-- dependency versions -->
+    <javax.json.version>1.1.4</javax.json.version>
+    <javax.json.api.version>1.1.4</javax.json.api.version>
+    <javax.servlet.version>4.0.1</javax.servlet.version>
+    <junit.version>4.12</junit.version>
+    <logback-classic.version>1.2.3</logback-classic.version>
+    <mockito.version>2.27.0</mockito.version>
+    <okhttp.version>4.2.2</okhttp.version>
+    <slf4j.version>1.7.25</slf4j.version>
+
+    <!-- other integration test related properties -->
+    <pass.doi.service.port>8080</pass.doi.service.port>
+
+    <failOnMissingWebXml>false</failOnMissingWebXml>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.pass</groupId>
+      <artifactId>pass-core-object-service</artifactId>
+      <version>${project.parent.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>${javax.json.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>${okhttp.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.json</groupId>
+      <artifactId>javax.json-api</artifactId>
+      <version>${javax.json.api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${javax.servlet.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback-classic.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
