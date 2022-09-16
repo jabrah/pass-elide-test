@@ -7,7 +7,14 @@
 package org.eclipse.pass.elide;
 
 import com.google.common.collect.Lists;
+import com.yahoo.elide.ElideSettings;
+import com.yahoo.elide.ElideSettingsBuilder;
+import com.yahoo.elide.core.datastore.DataStore;
+import com.yahoo.elide.core.dictionary.EntityDictionary;
+import com.yahoo.elide.core.filter.dialect.RSQLFilterDialect;
 import com.yahoo.elide.datastores.aggregation.queryengines.sql.dialects.SQLDialectFactory;
+import com.yahoo.elide.jsonapi.JsonApiMapper;
+import com.yahoo.elide.jsonapi.links.DefaultJSONApiLinks;
 import com.yahoo.elide.standalone.config.ElideStandaloneAnalyticSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneAsyncSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
@@ -18,6 +25,8 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import liquibase.servicelocator.ServiceLocator;
+
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -28,6 +37,8 @@ import java.sql.DriverManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.TimeZone;
+
 import javax.jms.ConnectionFactory;
 
 /**
@@ -54,6 +65,42 @@ public abstract class Settings implements ElideStandaloneSettings {
         this.inMemory = inMemory;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * Mostly copied from superclass, with the addition of the JSON:API links handling
+     */
+    @Override
+    public ElideSettings getElideSettings(EntityDictionary dictionary, DataStore dataStore, JsonApiMapper mapper) {
+        String jsonApiBaseUrl = getBaseUrl() + getJsonApiPathSpec().replaceAll("/\\*", "") + "/";
+        
+        ElideSettingsBuilder builder = new ElideSettingsBuilder(dataStore)
+                .withEntityDictionary(dictionary)
+                .withErrorMapper(getErrorMapper())
+                .withJoinFilterDialect(RSQLFilterDialect.builder().dictionary(dictionary).build())
+                .withSubqueryFilterDialect(RSQLFilterDialect.builder().dictionary(dictionary).build())
+                .withBaseUrl(getBaseUrl())
+                .withJsonApiPath(getJsonApiPathSpec().replaceAll("/\\*", ""))
+                .withGraphQLApiPath(getGraphQLApiPathSpec().replaceAll("/\\*", ""))
+                .withJsonApiMapper(mapper)
+                .withAuditLogger(getAuditLogger())
+                .withJSONApiLinks(new DefaultJSONApiLinks(jsonApiBaseUrl));
+
+        if (verboseErrors()) {
+            builder.withVerboseErrors();
+        }
+
+        if (getAsyncProperties().enableExport()) {
+            builder.withExportApiPath(getAsyncProperties().getExportApiPathSpec().replaceAll("/\\*", ""));
+        }
+
+        if (enableISO8601Dates()) {
+            builder.withISO8601Dates("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"));
+        }
+
+        return builder.build();
+    }
+
     @Override
     public int getPort() {
         //Heroku exports port to come from $PORT
@@ -65,6 +112,11 @@ public abstract class Settings implements ElideStandaloneSettings {
     @Override
     public boolean enableSwagger() {
         return true;
+    }
+
+    @Override
+    public String getSwaggerPathSepc() {
+        return "/swagger/*";
     }
 
     @Override
