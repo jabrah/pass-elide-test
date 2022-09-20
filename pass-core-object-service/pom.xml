@@ -9,21 +9,21 @@
 
   <artifactId>pass-core-object-service</artifactId>
 
-  <properties>
-    <elide.version>6.1.4</elide.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.yahoo.elide</groupId>
-      <artifactId>elide-standalone</artifactId>
+      <artifactId>elide-spring-boot-starter</artifactId>
       <version>${elide.version}</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
           <artifactId>commons-logging</artifactId>
         </exclusion>
-      </exclusions>
+	<exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>      
     </dependency>
 
     <!-- Test dependencies -->
