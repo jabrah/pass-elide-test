@@ -126,17 +126,12 @@ public class File {
             }
             return result;
         }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
     }
 
     private static class FileRoleToStringConverter implements AttributeConverter<FileRole, String> {
         @Override
         public String convertToDatabaseColumn(FileRole attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override

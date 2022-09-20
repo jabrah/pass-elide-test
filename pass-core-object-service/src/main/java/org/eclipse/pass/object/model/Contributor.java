@@ -97,7 +97,7 @@ public class Contributor {
      * Publication
      */
     @Convert(converter = RoleListToStringConverter.class)
-    private List<Role> roles = new ArrayList<Role>();
+    private List<ContributorRole> roles = new ArrayList<ContributorRole>();
 
     /**
      * URI of the publication that this contributor is associated with
@@ -115,7 +115,7 @@ public class Contributor {
     /**
      * list of possible contributor Roles
      */
-    public enum Role {
+    public enum ContributorRole {
 
         /**
          * Author role
@@ -137,17 +137,17 @@ public class Contributor {
          */
         CORRESPONDING_AUTHOR("corresponding-author");
 
-        private static final Map<String, Role> map = new HashMap<>(values().length, 1);
+        private static final Map<String, ContributorRole> map = new HashMap<>(values().length, 1);
 
         static {
-            for (Role r : values()) {
+            for (ContributorRole r : values()) {
                 map.put(r.value, r);
             }
         }
 
         private String value;
 
-        private Role(String value) {
+        private ContributorRole(String value) {
             this.value = value;
         }
 
@@ -157,30 +157,29 @@ public class Contributor {
          * @param role Serialized role string
          * @return The parsed value.
          */
-        public static Role of(String role) {
-            Role result = map.get(role);
+        public static ContributorRole of(String role) {
+            ContributorRole result = map.get(role);
             if (result == null) {
                 throw new IllegalArgumentException("Invalid Role: " + role);
             }
             return result;
         }
 
-        @Override
-        public String toString() {
-            return this.value;
+        public String getValue() {
+            return value;
         }
     }
 
-    private static class RoleListToStringConverter implements AttributeConverter<List<Role>, String> {
+    private static class RoleListToStringConverter implements AttributeConverter<List<ContributorRole>, String> {
         @Override
-        public String convertToDatabaseColumn(List<Role> attribute) {
+        public String convertToDatabaseColumn(List<ContributorRole> attribute) {
             return attribute == null ? null
-                    : String.join(",", attribute.stream().map(Role::toString).collect(Collectors.toList()));
+                    : String.join(",", attribute.stream().map(ContributorRole::getValue).collect(Collectors.toList()));
         }
 
         @Override
-        public List<Role> convertToEntityAttribute(String dbData) {
-            return dbData == null ? Collections.emptyList() : Stream.of(dbData.split(",")).map(Role::of).collect(Collectors.toList());
+        public List<ContributorRole> convertToEntityAttribute(String dbData) {
+            return dbData == null ? Collections.emptyList() : Stream.of(dbData.split(",")).map(ContributorRole::of).collect(Collectors.toList());
         }
     }
 }

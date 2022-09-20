@@ -129,18 +129,13 @@ public class RepositoryCopy {
             }
             return result;
         }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
     }
 
     @Converter
     private static class CopyStatusToStringConverter implements AttributeConverter<CopyStatus, String> {
         @Override
         public String convertToDatabaseColumn(CopyStatus attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override

@@ -233,18 +233,12 @@ public class Submission {
         public boolean isSubmitted() {
             return submitted;
         }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
-
     }
 
     private static class SubmissionStatusToStringConverter implements AttributeConverter<SubmissionStatus, String> {
         @Override
         public String convertToDatabaseColumn(SubmissionStatus attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override
@@ -311,17 +305,12 @@ public class Submission {
             }
             return result;
         }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
     }
 
     private static class AggregatedDepositStatusToStringConverter implements AttributeConverter<AggregatedDepositStatus, String> {
         @Override
         public String convertToDatabaseColumn(AggregatedDepositStatus attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override
@@ -351,11 +340,6 @@ public class Submission {
             this.value = value;
         }
 
-        @Override
-        public String toString() {
-            return this.value;
-        }
-
         /**
          * Parse performer role
          *
@@ -376,7 +360,7 @@ public class Submission {
     private static class SourceToStringConverter implements AttributeConverter<Source, String> {
         @Override
         public String convertToDatabaseColumn(Source attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override

@@ -137,17 +137,12 @@ public class Repository {
             }
             return result;
         }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
     }
 
     private static class IntegrationTypeToStringConverter implements AttributeConverter<IntegrationType, String> {
         @Override
         public String convertToDatabaseColumn(IntegrationType attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override

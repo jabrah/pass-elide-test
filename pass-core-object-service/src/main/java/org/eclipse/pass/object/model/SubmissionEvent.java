@@ -142,19 +142,13 @@ public class SubmissionEvent {
             }
             return result;
         }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
-
     }
 
     @Converter
     private static class EventTypeToStringConverter implements AttributeConverter<EventType, String> {
         @Override
         public String convertToDatabaseColumn(EventType attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override
@@ -174,11 +168,6 @@ public class SubmissionEvent {
 
         private PerformerRole(String value) {
             this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return this.value;
         }
 
         /**
@@ -202,7 +191,7 @@ public class SubmissionEvent {
     private static class PerformerRoleToStringConverter implements AttributeConverter<PerformerRole, String> {
         @Override
         public String convertToDatabaseColumn(PerformerRole attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override

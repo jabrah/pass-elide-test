@@ -126,17 +126,12 @@ public class Deposit {
             }
             return result;
         }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
     }
 
     private static class DepositStatusToStringConverter implements AttributeConverter<DepositStatus, String> {
         @Override
         public String convertToDatabaseColumn(DepositStatus attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override

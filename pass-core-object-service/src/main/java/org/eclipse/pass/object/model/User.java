@@ -108,12 +108,12 @@ public class User {
      * User's system roles in PASS
      */
     @Convert(converter = RoleListToStringConverter.class)
-    private List<Role> roles = new ArrayList<Role>();
+    private List<UserRole> roles = new ArrayList<UserRole>();
 
     /**
      * list of possible user Roles
      */
-    public enum Role {
+    public enum UserRole {
 
         /**
          * Grant admin role
@@ -125,17 +125,17 @@ public class User {
          */
         SUBMITTER("submitter");
 
-        private static final Map<String, Role> map = new HashMap<>(values().length, 1);
+        private static final Map<String, UserRole> map = new HashMap<>(values().length, 1);
 
         static {
-            for (Role r : values()) {
+            for (UserRole r : values()) {
                 map.put(r.value, r);
             }
         }
 
         private String value;
 
-        private Role(String value) {
+        private UserRole(String value) {
             this.value = value;
         }
 
@@ -145,30 +145,29 @@ public class User {
          * @param role Serialized role
          * @return parsed role.
          */
-        public static Role of(String role) {
-            Role result = map.get(role);
+        public static UserRole of(String role) {
+            UserRole result = map.get(role);
             if (result == null) {
                 throw new IllegalArgumentException("Invalid Role: " + role);
             }
             return result;
         }
 
-        @Override
-        public String toString() {
-            return this.value;
+        public String getValue() {
+            return value;
         }
     }
 
-    private static class RoleListToStringConverter implements AttributeConverter<List<Role>, String> {
+    private static class RoleListToStringConverter implements AttributeConverter<List<UserRole>, String> {
         @Override
-        public String convertToDatabaseColumn(List<Role> attribute) {
+        public String convertToDatabaseColumn(List<UserRole> attribute) {
             return attribute == null || attribute.isEmpty() ? null
-                    : String.join(",", attribute.stream().map(Role::toString).collect(Collectors.toList()));
+                    : String.join(",", attribute.stream().map(UserRole::getValue).collect(Collectors.toList()));
         }
 
         @Override
-        public List<Role> convertToEntityAttribute(String dbData) {
-            return dbData == null || dbData.isEmpty() ? Collections.emptyList() : Stream.of(dbData.split(",")).map(Role::of).collect(Collectors.toList());
+        public List<UserRole> convertToEntityAttribute(String dbData) {
+            return dbData == null || dbData.isEmpty() ? Collections.emptyList() : Stream.of(dbData.split(",")).map(UserRole::of).collect(Collectors.toList());
         }
     }
 }

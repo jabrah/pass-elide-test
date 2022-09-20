@@ -155,17 +155,12 @@ public class Grant {
             }
             return result;
         }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
     }
 
     private static class AwardStatusToStringConverter implements AttributeConverter<AwardStatus, String> {
         @Override
         public String convertToDatabaseColumn(AwardStatus attribute) {
-            return attribute == null ? null : attribute.toString();
+            return attribute == null ? null : attribute.value;
         }
 
         @Override
