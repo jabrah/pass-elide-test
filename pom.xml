@@ -57,7 +57,7 @@
 
   <properties>
     <junit.version>4.12</junit.version>
-
+    <elide.version>6.1.7</elide.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
