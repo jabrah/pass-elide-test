@@ -2,6 +2,6 @@ FROM openjdk:11-jre-slim
 
 WORKDIR /app
 
-COPY target/pass-elide-test.jar .
+COPY target/pass-core-main.jar .
 
-ENTRYPOINT ["java","-jar","pass-elide-test.jar"]
+ENTRYPOINT ["java","-jar","pass-core-main.jar"]

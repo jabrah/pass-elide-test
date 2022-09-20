@@ -15,7 +15,7 @@ mvn clean package
 # Running local build
 
 ```
-java -jar pass-elide-test.jar
+java -jar pass-core-main.jar
 ```
 
 On startup tables will be created and the schema used will be written to pass.db.sql.
@@ -39,7 +39,7 @@ All of our data model is available, just divided into attributes and relationshi
 ## Creating a RepositoryCopy
 
 ```
-curl -v -X POST "http://localhost:8080/api/v1/repositoryCopy" -H "accept: application/vnd.api+json" -H "Content-Type: application/vnd.api+json" -d @rc1.json
+curl -v -X POST "http://localhost:8080/object/repositoryCopy" -H "accept: application/vnd.api+json" -H "Content-Type: application/vnd.api+json" -d @rc1.json
 ```
 
 *rc1.json:*
@@ -58,7 +58,7 @@ curl -v -X POST "http://localhost:8080/api/v1/repositoryCopy" -H "accept: applic
 ## Patch a Journal
 
 ```
-curl -X PATCH "http://localhost:8080/api/v1/journal/1" -H "accept: application/vnd.api+json" -H "Content-Type: application/vnd.api+json" -d @patch.json
+curl -X PATCH "http://localhost:8080/object/journal/1" -H "accept: application/vnd.api+json" -H "Content-Type: application/vnd.api+json" -d @patch.json
 ```
 
 *patch.json:*
@@ -88,4 +88,3 @@ curl -X PATCH "http://localhost:8080/api/v1/journal/1" -H "accept: application/v
   * The provided json api console gets the PATCH syntax wrong. There must be a data member of the relationship object in the JSON.
   * Can tighten up some of the type handling. For example I changed all our URI to string, but some may make sense as URI. Can add Serdes for them.
 
-  
