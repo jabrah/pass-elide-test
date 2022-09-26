@@ -72,6 +72,7 @@ public class ElidePassClient2 implements PassClient {
         }
     }
 
+    @Override
     public <T> void visitObjects(Class<T> type, Consumer<T> action) throws IOException {
         try (DataStoreTransaction tx = elide.getDataStore().beginReadTransaction()) {
             RequestScope scope = get_scope(tx);
