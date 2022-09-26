@@ -37,11 +37,6 @@ public abstract class PassEntity {
     private Long id;
 
     /**
-     * Optional context field, when present this can be used to convert the JSON to JSON-LD
-     */
-    protected String context = null;
-
-    /**
      * PassEntity constructor
      */
     protected PassEntity() {
@@ -58,7 +53,6 @@ public abstract class PassEntity {
                                                + "an object, the model object cannot be null");
         }
         this.id = passEntity.id;
-        this.context = passEntity.context;
     }
 
     /**
@@ -81,20 +75,6 @@ public abstract class PassEntity {
         this.id = id;
     }
 
-    /**
-     * @return the context
-     */
-    public String getContext() {
-        return context;
-    }
-
-    /**
-     * @param context the context to set
-     */
-    public void setContext(String context) {
-        this.context = context;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,9 +89,7 @@ public abstract class PassEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) {
             return false;
         }
-        if (context != null ? !context.equals(that.context) : that.context != null) {
-            return false;
-        }
+
         return true;
     }
 
@@ -119,7 +97,6 @@ public abstract class PassEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (context != null ? context.hashCode() : 0);
         return result;
     }
 }
