@@ -44,7 +44,6 @@
 
   <modules>
     <module>pass-core-object-service</module>
-    <module>pass-core-doi-service</module>
     <module>pass-core-main</module>    
   </modules>
 
@@ -57,7 +56,7 @@
 
   <properties>
     <junit.version>4.12</junit.version>
-    <elide.version>6.1.7</elide.version>
+    <elide.version>6.1.8</elide.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 

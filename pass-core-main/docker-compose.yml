@@ -9,8 +9,8 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
       - ./init_postgres.sh:/docker-entrypoint-initdb.d/init_postgres.sh
-  elide:
-    image: oapass/pass-core-main:0.2
+  core:
+    image: oapass/pass-core-main:0.2.0-SNAPSHOT
     build:
       context: .
     env_file: .env

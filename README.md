@@ -1,8 +1,6 @@
 # Introduction
 
-This is a test of exposing the PASS data model using Elide.
-
-It is based on https://github.com/yahoo/elide-standalone-example.
+This module is responsible for PASS backend services.
 
 # Building
 
@@ -12,25 +10,30 @@ Java 11 and Maven 3.8 required.
 mvn clean package
 ```
 
+This will produce an executabler jar `pass-core-main/target/pass-core-main.jar`.
+
 # Running local build
 
 ```
 java -jar pass-core-main.jar
 ```
 
-On startup tables will be created and the schema used will be written to pass.db.sql.
 By default an in memory database is used.
 
-Look at http://localhost:8080/ to see the auto-created documentation and a UI for testing out the api. You can directly make request with the UI and see what happens. Note when doing a POST to create an object, be sure to edit the type field to have the correct object type and delete the id field to have the id auto-generated.
+Look at http://localhost:8080/ to see the auto-created documentation and a UI for testing out the api.
 
-## Running with Docker setup
+You can directly make request with the UI and see what happens. Note when doing a POST to create an object, be sure to edit the type field to have the correct object type and delete the id field to have the id auto-generated.
+
+## Running with Docker
 
 This uses Postgres.
 
-Just run:
+In pass-core-main run:
 ```
 docker-compose up -d
 ```
+
+If you want to build an image, 
 
 # Using JSON API
 
@@ -48,7 +51,7 @@ curl -v -X POST "http://localhost:8080/object/repositoryCopy" -H "accept: applic
   "data": {
     "type": "repositoryCopy",
     "attributes": {
-      "accessUrl": "why",
+      "accessUrl": "http://example.com/path",
       "copyStatus": "ACCEPTED"
     }
   }
@@ -56,6 +59,8 @@ curl -v -X POST "http://localhost:8080/object/repositoryCopy" -H "accept: applic
 ```
 
 ## Patch a Journal
+
+Add a publisher object to the publisher relationship in a journal. Note that both the journal and publisher objects must already exist.
 
 ```
 curl -X PATCH "http://localhost:8080/object/journal/1" -H "accept: application/vnd.api+json" -H "Content-Type: application/vnd.api+json" -d @patch.json
@@ -78,13 +83,3 @@ curl -X PATCH "http://localhost:8080/object/journal/1" -H "accept: application/v
   }
 }
 ```
-
-
-# Known issues
-
-  * Enums are stored in the db using their uppercase name, not the intended value. This can be fixed with custom converters.
-  * Need nicer endpoint. Maybe /data. 
-  * RepositoryCopy in Java becomes repositoryCopy to JSON API. Do we like this or not?
-  * The provided json api console gets the PATCH syntax wrong. There must be a data member of the relationship object in the JSON.
-  * Can tighten up some of the type handling. For example I changed all our URI to string, but some may make sense as URI. Can add Serdes for them.
-
